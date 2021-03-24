@@ -65,7 +65,6 @@ export class PostService {
   likedPost(id: string): Observable<Post> {
     this.userId = this.auth.getUserId();
     const stringData = { userId: this.userId };
-    console.log(this.userId);
     return this.http
       .post<Post>(`${this.api}/post/like/` + id, stringData)
       .pipe(catchError((error: any) => throwError(JSON.stringify(error))));

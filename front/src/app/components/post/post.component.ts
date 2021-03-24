@@ -157,6 +157,6 @@ export class PostComponent implements OnInit {
       .subscribe(() => this.refreshPost.emit('refresh'));
     this.postService
       .nbComments(comment.postId)
-      .subscribe(() => console.log('uddate'));
+      .subscribe(() => console.log('post mis à jour'));
   }
 }

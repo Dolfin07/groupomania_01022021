@@ -27,19 +27,19 @@ export class CommentService {
 
   createComment(comment: Comment): Observable<Comment> {
     return this.http
-      .post(`${this.api}/comment/`, comment)
+      .post<Comment>(`${this.api}/comment/`, comment)
       .pipe(catchError((error: any) => throwError(error)));
   }
 
   modifyComment(id: string, comment: string): Observable<Comment> {
     return this.http
-      .put(`${this.api}/comment/` + id, comment)
+      .put<Comment>(`${this.api}/comment/` + id, comment)
       .pipe(catchError((error: any) => throwError(error)));
   }
 
   deleteComment(id: string): Observable<Comment> {
     return this.http
-      .delete(`${this.api}/comment/` + id)
+      .delete<Comment>(`${this.api}/comment/` + id)
       .pipe(catchError((error: any) => throwError(error)));
   }
 }

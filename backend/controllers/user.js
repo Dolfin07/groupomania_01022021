@@ -130,24 +130,29 @@ exports.login = (req, res) => {
   const reqConnexion = "SELECT * FROM user WHERE email = ?";
 
   db.query(reqConnexion, email, (error, result) => {
-    if (!error && result.length == 0) {
+    if (error || result.length == 0) {
       res.status(401).json({ error: "Utilisateur non trouvé !" });
+    } else {
+      bcrypt
+        .compare(password, result[0].password)
+        .then((valid) => {
+          if (!valid) {
+            return res.status(401).json({ error: "Mot de passe incorrect !" });
+          }
+          res.status(200).json({
+            admin: result[0].admin,
+            photo: result[0].photo,
+            userId: result[0].iduser,
+            token: jwt.sign(
+              { userId: result[0].iduser },
+              "RANDOM_TOKEN_SECRET",
+              {
+                expiresIn: "60d",
+              }
+            ),
+          });
+        })
+        .catch((error) => res.status(500).json(error.message));
     }
-    bcrypt
-      .compare(password, result[0].password)
-      .then((valid) => {
-        if (!valid) {
-          return res.status(401).json({ error: "Mot de passe incorrect !" });
-        }
-        res.status(200).json({
-          admin: result[0].admin,
-          photo: result[0].photo,
-          userId: result[0].iduser,
-          token: jwt.sign({ userId: result[0].iduser }, "RANDOM_TOKEN_SECRET", {
-            expiresIn: "60d",
-          }),
-        });
-      })
-      .catch((error) => res.status(500).json(error.message));
   });
 };

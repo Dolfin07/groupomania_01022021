@@ -138,20 +138,15 @@ exports.updateLikePost = (req, res) => {
   db.query(verif, insert, (error, result) => {
     if (!error) {
       if (result.length > 0) {
-        console.log(insert);
-
         res.json("Like déjà pris en compte");
       } else {
-        console.log(insert, "user est = à ", req.user);
         const reqUpdateLiked = "INSERT INTO liked SET idPosts = ?, idUsers = ?";
         db.query(reqUpdateLiked, insert, (error, result) => {
           if (!error) {
-            console.log("1");
             const upLikePost =
               "UPDATE post SET liked = liked + 1 WHERE idpost = ?";
             db.query(upLikePost, insert[0], (error, result) => {
               if (!error) {
-                console.log(2);
                 res.json("Table liked et like mis à jour");
               } else {
                 res.json(error.message);

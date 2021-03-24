@@ -3,7 +3,6 @@ const db = require("../db");
 exports.adminUser = (req, res, next) => {
   const userId = req.user;
   const idReq = req.params.id;
-  console.log(req.user);
 
   const reqPrepare = "SELECT admin FROM user WHERE iduser = ? ";
   db.query(reqPrepare, userId, (error, result) => {
