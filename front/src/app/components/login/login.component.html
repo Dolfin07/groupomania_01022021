@@ -1,0 +1,44 @@
+<div class="bg-secondary fond w-50 text-white mx-auto pb-3 my-5">
+  <h1 class="text-center py-3">Connexion</h1>
+  <form [formGroup]="loginForm" class="px-5">
+
+    <!-- input email -->
+    <div class="form-group row ml-3 pt-3">
+      <label for="email" class="col-sm-3 col-form-label pb-3">Email</label>
+      <div class="col-sm-9">
+        <input type="email" class="form-control w-75" id="email" formControlName="email" placeholder="Email" required>
+        <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="alert alert-danger">
+          <div *ngIf="f.email.errors.required">
+            Le champ "email" est obligatoire.
+          </div>
+          <div *ngIf="f.email.errors.email">
+            Email invalide.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- input mot de passe -->
+    <div class="form-group row ml-3">
+      <label for="password" class="col-sm-3 col-form-label pb-3">Mot de passe</label>
+      <div class="col-sm-9">
+        <input type="password" class="form-control w-75" id="password" formControlName="password"
+          placeholder="Mot de passe" required>
+      </div>
+      <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" class="alert alert-danger">
+        <div *ngIf="f.password.errors.required">
+          Le champ "mot de passe" est obligatoire.
+        </div>
+        <div *ngIf="f.password.errors.pattern">
+          "Le mot de passe doit contenir entre 8 et 25 caractères avec au moins 1 majuscule, 1 minuscule et 1 chiffre,
+          sans espace"
+        </div>
+      </div>
+    </div>
+
+    <!-- bouton validation -->
+    <div class="form-group py-5">
+      <button type="submit" id="btn" class="btn" (click)="onLogin()" [disabled]="loginForm.invalid">Connection</button>
+    </div>
+  </form>
+</div>

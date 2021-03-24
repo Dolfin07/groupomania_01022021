@@ -1,0 +1,7 @@
+<div class="pb-5" id="container">
+    <app-header></app-header>
+    <app-profil></app-profil>
+    <div id="post">
+        <app-post *ngFor="let post of posts" [post]="post" (refreshPost)="refreshPost()"></app-post>
+    </div>
+</div>

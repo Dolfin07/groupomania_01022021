@@ -1,0 +1,45 @@
+header {
+    width: 100%;
+    height: 125px;
+    background-image: url("../../../assets/fond-header.png");
+}
+
+#logo {
+    width: 55%;
+    height: 55%;
+}
+
+#signup, #login {
+    padding: 5px 10px;
+    float: left;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #091f43;
+    text-decoration: none;
+    background-color: rgb(206, 204, 204);
+    border-bottom: 5px solid rgb(129, 128, 128);
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+}
+
+#signup:hover, #login:hover {
+    cursor: pointer;
+    transform: translate(0px,5px);
+    -webkit-transform: translate(0px,5px);
+    border-bottom: 1px solid;
+}
+
+/* Media Phone */
+
+@media all and (max-width: 576px) {
+
+    #container {
+        flex-direction: column;
+    }
+
+    #signup, #login {
+        transition: none;
+        font-size: 12px;
+    }
+}

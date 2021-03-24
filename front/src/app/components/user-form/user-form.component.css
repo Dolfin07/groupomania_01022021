@@ -1,0 +1,42 @@
+#container {
+    width: 75%;
+    margin-top: 5%;
+    box-shadow: 3px 3px 6px #000;
+    border-radius: 10px;
+}
+
+#btn {
+    padding: 5px 10px;
+    float: left;
+    margin-left: 42%;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #091f43;
+    text-decoration: none;
+    background-color: rgb(206, 204, 204);
+    border-bottom: 5px solid rgb(24, 23, 23);
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+}
+
+#btn:hover {
+    cursor: pointer;
+    transform: translate(0px,5px);
+    -webkit-transform: translate(0px,5px);
+    border-bottom: 1px solid;
+}
+
+.button {
+    height: 35px;
+}
+
+/* Media Phone */
+
+@media all and (max-width: 576px) {
+
+#container {
+    width: 100%;
+}
+
+}

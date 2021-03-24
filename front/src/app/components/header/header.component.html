@@ -1,0 +1,11 @@
+<header>
+  <div class="d-inline-flex justify-content-around align-items-center w-100 h-100">
+    <a (click)="onClickUser()">
+      <img [src]="photo" id="profil" alt="photo de profil" title="profil">
+    </a>
+    <img src="../../../assets/logo.svg" id="logo" alt="logo">
+    <a (click)="onLogout()" class="mr-3" title="Se déconnecter" id="logout">
+      <i class="fas fa-sign-out-alt text-danger"></i>
+    </a>
+  </div>
+</header>

@@ -1,0 +1,96 @@
+<div>
+  <div id="container" class="mt-5 py-3 bg-dark">
+    <div class="mt-2">
+      <img [src]="photo" id="profil" class="d-block mx-auto" alt="photo de profil">
+      <div class="container-click-newForm"><a (click)="open(newForm)" class="mt-2 mr-5" id="newPost">Que voulez-vous
+          dire aujourd'hui, {{ firstname | titlecase }} ?</a></div>
+    </div>
+
+    <!-- Top Post -->
+    <div class="my-1">
+      <h4 class="text-center text-white red mt-2 p-2">Top 5</h4>
+      <div *ngFor=" let post of posts" class="mt-4 card" (click)="onClickPost(post.idpost)">
+        <!-- Card header -->
+        <div id="card-header" class="text-white bg-secondary d-flex justify-content-between p-2">
+          <div class="icone ml-1"> Posté le <span class="date">{{ post.date | date: 'd/MM/y' }}</span> à <span
+              class="date">{{ post.date | date: 'hh:mm'}}</span> par <span class="date">{{ post.firstname }}
+              {{ post.lastname }}</span></div>
+          <div class="icone mr-2">
+            <i class="fas fa-thumbs-up"></i>{{ post.liked }}
+            <i class="fas fa-comments ml-2"></i> {{ post.nb_comments}}
+          </div>
+        </div>
+
+        <!-- Card body -->
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ post.titre }}</h5>
+          <div>
+            <img class="card-img-top mx-auto img rounded ml-3 d-block" [src]='post.image' alt="Card image cap">
+            <p id="content" class="card-text mt-2 ml-2">{{ post.content}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <ng-template #newForm let-modal>
+    <div id="modal">
+      <div class="modal-body">
+        <h4 class="modal-title d-inline-block text-white bg-secondary text-center p-1" id="modal-basic-title">Nouveau
+          Post</h4>
+        <button type="button" class="close ml-2 p-2" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">X</span>
+        </button>
+        <form [formGroup]="postForm" class="p-2" (ngSubmit)="onSubmit()">
+          <!-- input titre -->
+          <div class="form-group row pt-3">
+            <label for="titre" class="col-sm-2 col-form-label pb-3">Titre</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control w-50" id="titre" formControlName="titre"
+                placeholder="titre du post" required>
+              <div *ngIf="f.titre.invalid && (f.titre.dirty || f.titre.touched)" class="alert alert-danger">
+                <div *ngIf="f.titre.errors.required">
+                  Le titre est obligatoire.
+                </div>
+                <div *ngIf="f.titre.errors.maxlength">
+                  Le champ titre ne peut dépasser 63000 caractères.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- input image -->
+          <div class="form-group row">
+            <label for="image" class="col-sm-2 col-form-label pb-3">Image</label>
+            <div class="col-sm-10">
+              <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)" name="image">
+              <img [src]="imagePreview" *ngIf="imagePreview" id="img-modal">
+            </div>
+          </div>
+          <!-- input content -->
+          <div class="form-group row">
+            <label for="content" class="col-sm-2 col-form-label">Contenu</label>
+            <div class="col-sm-10">
+              <textarea class="form-control w-75" id="content-modal" formControlName="content"
+                required>Contenu du post ....</textarea>
+              <div *ngIf="f.content.invalid && (f.content.dirty || f.content.touched)" class="alert alert-danger">
+                <div *ngIf="f.content.errors.required">
+                  Le champ "contenu" est obligatoire.
+                </div>
+                <div *ngIf="f.content.errors.maxlength">
+                  Le champ contenu ne peut avoir plus de 45 caractères.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- bouton validation -->
+          <div class=" bouton-container d-flex justify-content-around align-items-start p-2">
+            <button type="submit" class="btn btn-secondary" id="valid" (click)="modal.close('Save click')"
+              [disabled]="postForm.invalid">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+</div>

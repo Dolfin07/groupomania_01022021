@@ -1,0 +1,81 @@
+#blue {
+  background-image: url("../../../assets/sans-titre.png");
+  border-radius: 10px 10px 0 0;
+  letter-spacing: .5px;
+}
+
+#card-header {
+  border-radius: 10px 10 px 0 0;
+}
+
+#click-user {
+  width: 10%;
+  color: #fff;
+}
+
+#modif,
+#delete,
+#liked,
+#valid-modal,
+#click-user {
+  cursor: pointer;
+}
+
+#delete {
+  margin-left: 3%;
+}
+
+#container {
+  width: 12%;
+}
+
+.img {
+  width: 65%;
+}
+
+/* New Comment */
+
+#profil {
+  clip-path: ellipse(50% 50%);
+  height: 55%;
+  width: 55%;
+}
+
+.content {
+  resize: none !important;
+  border: 1px solid #6c757d;
+  border-radius: 0;
+}
+
+.content::placeholder {
+  color: #fff;
+}
+
+.btn-new-comment {
+  background-color: rgb(206, 204, 204);
+}
+
+/* All Comments */
+
+#comments {
+  font-size: 14px;
+}
+
+/* modal */
+
+#modal {
+  width: 900px;
+  background-color: rgb(182, 180, 180);
+}
+
+#modal-basic-title {
+  width: 90%;
+}
+
+#img {
+  max-height: 100px;
+}
+
+.bouton-container {
+  height: 70px;
+}

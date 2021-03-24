@@ -1,0 +1,67 @@
+<div *ngIf="post">
+  <div class="text-center">
+    <button class="btn btn-secondary mt-4" (click)="onBack()">Retour</button>
+  </div>
+  <!-- Post -->
+  <div class="w-75 mx-auto" id="idpost">
+    <div class="card text-white mt-5 mb-0" id="blue">
+      <!-- Card header -->
+      <div class="card-header bg-dark d-flex justify-content-between align-items-center" id="card-header">
+        <div>
+          Posté le {{ post.date | date: 'd/MM/y' }} à {{ post.date | date: 'HH:mm' }} par <a class="click-user"
+            (click)="onClickNamePost(post)" title="profil">{{ post.firstname | titlecase }}
+            {{ post.lastname | titlecase }}</a>
+        </div>
+        <div>
+          <i class="fas fa-thumbs-up mr-1" id="liked" (click)=onLiked(post)></i>{{ post.liked }}
+          <i class="fas fa-comments mr-1 pl-3"></i> {{ post.nb_comments }}
+        </div>
+      </div>
+
+      <!-- Card body -->
+      <div class="card-body">
+        <h5 class="card-title text-center">{{ post.titre }}</h5>
+        <img class="card-img-top img rounded mx-auto d-block" [src]='post.image' alt="Card image cap">
+        <p class="card-text mt-2">{{ post.content }}</p>
+      </div>
+    </div>
+
+    <div class="m-0 container-comment">
+      <!-- New Comment -->
+      <div class="form-group m-0 p-0 new-comment text-white">
+        <form [formGroup]="newCommentForm" class="d-flex">
+          <textarea class="form-control content text-white bg-secondary" formControlName="content" required
+            placeholder="Ecrire un commentaire ...."></textarea>
+          <div *ngIf="ncf.content.invalid && (ncf.content.dirty || ncf.content.touched)" class="alert alert-danger">
+            <div *ngIf="ncf.content.errors.required">
+              Le champ "contenu" est obligatoire.
+            </div>
+            <div *ngIf="ncf.content.errors.maxlength">
+              Le champ contenu ne peut avoir plus de 1000 caractères.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-light btn-new-comment" (click)="onSubmitNewComment(post)"
+            [disabled]="newCommentForm.invalid">Enregistrer
+          </button>
+        </form>
+      </div>
+
+      <!-- Comments -->
+      <div *ngFor="let comment of comments" class=" text-white mx-0">
+        <div class="blue bg-dark d-flex justify-content-between align-items-center pl-4 py-2" id="comments">
+          <div>
+            Posté le {{ comment.date | date: 'd/MM/y' }} à {{ comment.date | date: 'HH:mm' }} par <a class="click-user"
+              (click)="onClickNameComment(comment)">{{ comment.firstname }} {{ comment.lastname }}</a>
+          </div>
+          <div id="trash" class="pr-5 pt-2">
+            <i class="far fa-trash-alt text-danger" (click)="onDeleteComment(comment)" id="delete"
+              *ngIf="userId === comment.userId || admin === true"></i>
+          </div>
+        </div>
+        <div id="contenu-comment" class="p-1 bg-secondary">
+          <p class="mt-2 pl-3">{{ comment.content }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

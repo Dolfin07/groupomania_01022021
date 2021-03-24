@@ -1,0 +1,44 @@
+#blue {
+  background-image: url("../../../assets/sans-titre.png");
+  border-radius: 10px 10px 0 0;
+}
+
+#card-header {
+  border-radius: 10px 10px 0 0;
+  letter-spacing: .5px;
+}
+
+#liked,
+#delete {
+  cursor: pointer;
+}
+
+.click-user {
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.img {
+  width: 65%;
+}
+
+/* Comment */
+
+#contenu-comment {
+  border-radius: 0 0 10px 10px;
+}
+
+.content {
+  resize: none !important;
+  border: 1px solid #6c757d;
+  border-radius: 0;
+}
+
+.btn-new-comment {
+  background-color: rgb(206, 204, 204);
+}
+
+.content::placeholder {
+  color: #fff;
+}

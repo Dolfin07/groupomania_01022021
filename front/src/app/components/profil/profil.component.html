@@ -1,0 +1,153 @@
+<div>
+    <button id="back" class="btn my-5 ml-4" (click)="onBack()">Retour</button>
+
+    <!-- Profil -->
+    <div class="bg-secondary mx-auto  w-75 mt-5">
+        <h1 class="text-center pt-4"> Profil</h1>
+
+        <div class="row my-4 mx-auto w-75" *ngIf = "user">
+            <div class="col-5">
+                <img [src]="user.photo" alt="photo de profil" class= "rounded-circle" width="200">
+            </div>
+            <div class="col-6 py-4 bg-light">
+                <h2 class="text-center pb-2 font-weight-bold"> {{ user.firstname | titlecase}} {{ user.lastname | titlecase}}</h2>
+                <h3 class="mb-2"> <span class="font-weight-bold">Service : </span> {{ user.department }} </h3>
+                <h3 *ngIf = "user"> <span class="font-weight-bold">Adresse email : </span> {{ user.email }} </h3>
+            </div>
+        </div>
+
+        <div class="mx-auto d-flex justify-content-around w-50">
+            <button id="modif" class="btn my-5" (click)="open(modifyForm, user)" *ngIf="isOwner === true">Modifier</button>
+            <button id="delete" class="btn my-5" (click)="onDelete()" *ngIf="isOwner == true || admin === true">Supprimer</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <ng-template #modifyForm let-modal>
+        <div id="modal">
+            <div class="modal-body">
+                <h4 class="modal-title d-inline-block text-white bg-secondary text-center p-1" id="modal-basic-title">Modifier Profil</h4>
+                <button type="button" class="close ml-2 p-2" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">X</span>
+                </button>
+                <form [formGroup]="userForm" class="p-5" (ngSubmit)="onSubmit(post)">
+
+        <!-- input photo -->
+                    <div class="form-group row">
+                        <label for="photo" class="col-form-label col-sm-4 pb-3">Photo profil</label>
+                        <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)" name="photo" class="ml-2">
+                        <img [src]="imagePreview" *ngIf="imagePreview" id="img">
+                    </div>
+        
+        <!-- input nom -->
+                    <div class="form-group row">
+                        <label for="firstname" class="col-sm-4 col-form-label pb-3">Nom</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control w-75" id="firstname" formControlName ="firstname" placeholder="Nom" required>
+                            <div *ngIf="f.firstname.invalid && (f.firstname.dirty || f.firstname.touched)" class="alert alert-danger">
+                                <div *ngIf="f.firstname.errors.required">
+                                    Le champ "nom" est obligatoire.
+                                </div>
+                                <div *ngIf="f.firstname.errors.minlength">
+                                    Le nom doit avoir au moins deux caractères.
+                                </div>
+                                <div *ngIf="f.firstname.errors.maxlength">
+                                    Le nom ne peut avoir plus de 45 caractères.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+        <!-- input prénom -->
+                    <div class="form-group row">
+                        <label for="lastname" class="col-sm-4 col-form-label">Prénom</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control w-75" id="lastname" formControlName="lastname" placeholder="Prénom" required>
+                            <div *ngIf="f.lastname.invalid && (f.lastname.dirty || f.lastname.touched)" class="alert alert-danger">
+                                <div *ngIf="f.lastname.errors.required">
+                                    Le champ "prénom" est obligatoire.
+                                </div>
+                                <div *ngIf="f.lastname.errors.minlength">
+                                    Le prénom doit avoir au moins deux caractères.
+                                </div>
+                                <div *ngIf="f.lastname.errors.maxlength">
+                                    Le prénom ne peut avoir plus de 45 caractères.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+            <!-- input département -->
+                    <div class="form-group row pt-3">
+                        <label for="department" class="col-sm-4 col-form-label">Département</label>
+                        <div class="col-sm-8">
+                            <select class="form-select bg-light w-75 d-inline" aria-label="Select department" formControlName="department" required>
+                                <option value="">-- Departement --</option>
+                                <option value="RH">RH</option>
+                                <option value="comptabilité">Comptabilité</option>
+                                <option value="après-vente">Après-vente</option>          
+                                <option value="service-client">Service client</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                            <div *ngIf="f.department.invalid && (f.department.dirty || f.department.touched)" class="alert alert-danger">
+                                <div *ngIf="f.department.errors.required">
+                                    Le champ "département" est obligatoire.
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+        
+        <!-- input email -->
+                    <div class="form-group row pt-3">
+                        <label for="email" class="col-sm-4 col-form-label pb-3">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control w-75" id="email" formControlName="email" placeholder="Email" required>
+                            <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="alert alert-danger">
+                                <div *ngIf="f.email.errors.required">
+                                    Le champ "email" est obligatoire.
+                                </div>
+                                <div *ngIf="f.email.errors.email">
+                                        Email invalide.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+        <!-- input mot de passe -->
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-4 col-form-label pb-3">Mot de passe</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control w-75" id="password" formControlName="password" placeholder="Mot de passe" required>
+                        </div>
+                        <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" class="alert alert-danger">
+                            <div *ngIf="f.password.errors.required">
+                                Le champ "mot de passe" est obligatoire.
+                            </div>
+                            <div *ngIf="f.password.errors.pattern">
+                                "Le mot de passe doit contenir entre 8 et 25 caractères avec au moins 1 majuscule, 1 minuscule et 1 chiffre, sans espace"
+                            </div>
+                        </div>
+                    </div>
+        
+        <!-- input repete mot de passe -->
+                    <div class="form-group row">
+                        <label for="password2" class="col-sm-4 col-form-label">Confirmer votre mot de passe</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control w-75" id="password2" formControlName="password2" placeholder="Confirmer mot de passe" required>
+                            <div *ngIf="f.password2.invalid && (f.password2.dirty || f.password2.touched)" class="alert alert-danger">
+                                <div *ngIf="f.password2.errors.required">La confirmation du mot de passe est obligatoire</div>
+                                <div *ngIf="f.password2.errors.mustMatch">Les mots de passe doivent être identiques</div>
+                            </div>
+                        </div>
+                    </div> 
+                
+            <!-- bouton validation -->
+                    <div class=" bouton-container d-flex justify-content-around align-items-start p-2">
+                        <button type="submit" class="btn btn-secondary" id="valid" (click)="modal.close('Save click')" [disabled]="userForm.invalid">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,9 @@
+<app-header></app-header>
+<div class="d-flex justify-content-around" id="container">
+    <div id="post" class="d-flex flex-column">
+        <app-post *ngFor="let post of posts" [post]="post" (refreshPost)="refreshPost()"></app-post>
+    </div>
+    <div id="side-bar">
+    <app-side-bar (refreshPost)="refreshPost()"></app-side-bar>
+    </div>
+</div>
